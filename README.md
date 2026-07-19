@@ -1,5 +1,7 @@
 # Orion
 
+[![CI](https://github.com/Agrazel1459/Orion/actions/workflows/ci.yml/badge.svg)](https://github.com/Agrazel1459/Orion/actions/workflows/ci.yml)
+
 Orion is a small collection of single-purpose scripts that check a Windows
 or Linux machine for common signs of compromise, log what they find, and
 send you one notification per scan cycle. It is a defensive audit toolkit,
@@ -8,21 +10,103 @@ response process if you actually suspect you're compromised. It doesn't
 delete files, doesn't phone home, and doesn't run anything you haven't
 explicitly installed and scheduled yourself.
 
-## Quick start
+## Installation
 
-**Linux:**
-```
-git clone <this-repo-url> orion && cd orion
-chmod +x install.sh && ./install.sh
+Pick your OS and whether you have `git` installed. All four paths end up in
+the same place: a folder called `orion` with `install.sh`/`install.ps1`
+inside it.
+
+### Windows — with git
+
+1. Open **PowerShell as Administrator** (Start menu → search "PowerShell" →
+   right-click → "Run as administrator").
+2. Clone and enter the repo:
+   ```powershell
+   git clone https://github.com/Agrazel1459/Orion.git orion
+   cd orion
+   ```
+3. Allow the installer to run for this session only (doesn't change your
+   system-wide policy):
+   ```powershell
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+   ```
+4. Run the installer:
+   ```powershell
+   .\install.ps1
+   ```
+
+### Windows — without git (download ZIP)
+
+1. On the repo's GitHub page, click the green **Code** button → **Download
+   ZIP**.
+2. Right-click the downloaded ZIP → **Extract All...** → pick a folder like
+   `C:\Users\<you>\orion`.
+   (Don't run scripts from inside the ZIP itself — extract first, or
+   Windows will silently block them as coming from the internet.)
+3. Open **PowerShell as Administrator**, then:
+   ```powershell
+   cd C:\Users\<you>\orion
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+   Unblock-File -Path .\install.ps1, .\core\*.py, .\scripts\win\*.ps1
+   .\install.ps1
+   ```
+   The `Unblock-File` step removes the "downloaded from the internet" flag
+   Windows attaches to extracted files, which otherwise makes some of them
+   refuse to run.
+
+### Linux — with git
+
+```bash
+git clone https://github.com/Agrazel1459/Orion.git orion
+cd orion
+chmod +x install.sh
+./install.sh
 ```
 
-**Windows (PowerShell, as Administrator):**
-```
-git clone <this-repo-url> orion; cd orion
-.\install.ps1
-```
+### Linux — without git (download ZIP)
 
-Both installers are idempotent — safe to run more than once.
+1. Download the ZIP from the repo's GitHub page (**Code** → **Download
+   ZIP**), or via `curl`:
+   ```bash
+   curl -L -o orion.zip https://github.com/Agrazel1459/Orion/archive/refs/heads/main.zip
+   ```
+2. Extract and enter it:
+   ```bash
+   unzip orion.zip
+   cd Orion-main
+   ```
+3. Run the installer:
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
+
+Both installers are idempotent — safe to run more than once. Each checks
+whether a tool is already present before installing it.
+
+### After installing (both OSes)
+
+Run one manual cycle to confirm everything works before scheduling it:
+
+- **Windows:** `python core\orchestrator.py`
+- **Linux:** `python3 core/orchestrator.py`
+
+You should see a notification and a new `orion_state.json` file in the
+`orion` folder. If ClamAV was freshly installed on Windows, add its `bin`
+folder to your PATH and run `freshclam` once before this step — installers
+don't always do this automatically.
+
+Once the manual run works, schedule it so it runs unattended every 30
+minutes:
+
+- **Windows:**
+  ```powershell
+  schtasks /create /tn "Orion" /tr "python C:\path\to\orion\core\orchestrator.py" /sc minute /mo 30 /rl highest
+  ```
+- **Linux (cron):**
+  ```bash
+  (crontab -l 2>/dev/null; echo "*/30 * * * * /usr/bin/python3 /path/to/orion/core/orchestrator.py") | crontab -
+  ```
 
 ## What each script does
 

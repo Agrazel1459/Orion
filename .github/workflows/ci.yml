@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  python-syntax:
+    name: Python syntax + core self-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile all Python files
+        run: |
+          set -e
+          find . -name "*.py" -not -path "./.git/*" -print0 | xargs -0 -n1 python -m py_compile
+      - name: Run state_store.py self-test
+        run: python core/state_store.py
+      - name: Run notify.py self-test (expected to report no backend on CI runner)
+        run: python core/notify.py || true
+
+  shellcheck:
+    name: Shellcheck (linux scripts + install.sh)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: "./scripts/linux"
+          additional_files: "install.sh"
+          severity: warning
+
+  powershell-analyze:
+    name: PSScriptAnalyzer (windows scripts + install.ps1)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+      - name: Analyze scripts/win
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path ./scripts/win -Recurse -Severity Warning,Error
+          $results | Format-Table -AutoSize
+          if ($results | Where-Object { $_.Severity -eq "Error" }) {
+            throw "PSScriptAnalyzer found errors"
+          }
+      - name: Analyze install.ps1
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path ./install.ps1 -Severity Warning,Error
+          $results | Format-Table -AutoSize
+          if ($results | Where-Object { $_.Severity -eq "Error" }) {
+            throw "PSScriptAnalyzer found errors"
+          }
+
+  manifest-drift:
+    name: orion-manifest.json matches filesystem
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate manifest and diff against committed version
+        run: |
+          cp orion-manifest.json /tmp/orion-manifest.committed.json
+          python generate_manifest.py
+          diff /tmp/orion-manifest.committed.json orion-manifest.json
