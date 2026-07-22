@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config import SCRIPT_TIMEOUT_SECONDS, NOTIFY_TITLE_CLEAN, NOTIFY_MSG_CLEAN, NOTIFY_MSG_FLAGGED  # noqa: E402
 from notify import notify  # noqa: E402
 from state_store import add_finding  # noqa: E402
+from settings import load_settings  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -23,6 +24,7 @@ WIN_SCRIPTS = [
     "win-startup-check.ps1",
     "win-audio-device-audit.ps1",
     "win-remote-access-check.ps1",
+    "win-browser-extension-scan.ps1",
 ]
 
 LINUX_SCRIPTS = [
@@ -30,6 +32,7 @@ LINUX_SCRIPTS = [
     "linux-network-scan.sh",
     "linux-startup-check.sh",
     "linux-audio-device-audit.sh",
+    "linux-browser-extension-scan.sh",
 ]
 
 
@@ -101,10 +104,11 @@ def run_cycle():
 
     elapsed = time.time() - start
 
-    if total_flagged == 0:
-        notify(NOTIFY_TITLE_CLEAN, NOTIFY_MSG_CLEAN)
-    else:
-        notify(NOTIFY_TITLE_CLEAN, NOTIFY_MSG_FLAGGED.format(n=total_flagged))
+    if load_settings().get("notifications_enabled", True):
+        if total_flagged == 0:
+            notify(NOTIFY_TITLE_CLEAN, NOTIFY_MSG_CLEAN)
+        else:
+            notify(NOTIFY_TITLE_CLEAN, NOTIFY_MSG_FLAGGED.format(n=total_flagged))
 
     print(f"orchestrator: scripts_run={scripts_run} flagged={total_flagged} elapsed={elapsed:.2f}s")
     return 0

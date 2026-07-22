@@ -61,7 +61,39 @@ def get_unreviewed():
     return [e for e in _load() if not e["flags"]["false_positive_reviewed"]]
 
 
-if __name__ == "__main__":
+def delete_entry(entry_id):
+    """Removes Orion's record of a finding only. Does not touch the
+    underlying process/file/entry that was originally flagged — UI-only,
+    user-initiated action, distinct from the backend's own never-delete
+    scripts."""
+    entries = _load()
+    filtered = [e for e in entries if e["id"] != entry_id]
+    if len(filtered) == len(entries):
+        return False
+    _save(filtered)
+    return True
+
+
+def _run_cli(argv):
+    """Thin CLI wrapper so Electron's main process can call this file as a
+    subprocess (IPC bridge) instead of duplicating state logic in JS."""
+    cmd = argv[0]
+    if cmd == "get_all":
+        print(json.dumps(get_all()))
+    elif cmd == "add_finding" and len(argv) >= 3:
+        print(add_finding(argv[1], argv[2], argv[3] if len(argv) > 3 else ""))
+    elif cmd == "set_flag" and len(argv) >= 3:
+        val = argv[3].lower() != "false" if len(argv) > 3 else True
+        print(json.dumps(set_flag(argv[1], argv[2], val)))
+    elif cmd == "delete_entry" and len(argv) >= 2:
+        print(json.dumps(delete_entry(argv[1])))
+    else:
+        print(f"unknown command: {argv}", file=__import__("sys").stderr)
+        return 1
+    return 0
+
+
+def _self_test():
     if os.path.exists(STATE_FILE):
         os.remove(STATE_FILE)
     eid = add_finding("self-test", "dummy-target", "self-test entry")
@@ -71,5 +103,20 @@ if __name__ == "__main__":
     match = [e for e in entries if e["id"] == eid][0]
     assert match["flags"]["disabled"] is True, "flag not persisted"
     assert match["flags"]["terminated"] is False, "other flags mutated"
+
+    eid2 = add_finding("self-test", "second-target", "kept entry")
+    assert delete_entry(eid), "delete failed"
+    remaining = get_all()
+    assert len(remaining) == 1 and remaining[0]["id"] == eid2, "delete removed wrong entry(ies)"
+    assert delete_entry("nonexistent-id") is False, "delete of missing id should return False"
+
     os.remove(STATE_FILE)
     print("state_store.py self-test: PASS")
+
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        sys.exit(_run_cli(sys.argv[1:]))
+    else:
+        _self_test()

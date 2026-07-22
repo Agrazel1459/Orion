@@ -1,10 +1,12 @@
 [
   "win-audio-device-audit.ps1",
+  "win-browser-extension-scan.ps1",
   "win-network-scan.ps1",
   "win-process-scan.ps1",
   "win-remote-access-check.ps1",
   "win-startup-check.ps1",
   "linux-audio-device-audit.sh",
+  "linux-browser-extension-scan.sh",
   "linux-network-scan.sh",
   "linux-process-scan.sh",
   "linux-startup-check.sh",
@@ -14,5 +16,6 @@
   "config.py",
   "notify.py",
   "orchestrator.py",
+  "settings.py",
   "state_store.py"
 ]

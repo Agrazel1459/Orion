@@ -24,6 +24,12 @@ if (-not (Test-Cmd "python")) {
     Write-Host "python: already present, skip"
 }
 
+if (-not (Test-Cmd "node")) {
+    winget install --id OpenJS.NodeJS.LTS -e --source winget --accept-package-agreements --accept-source-agreements
+} else {
+    Write-Host "node: already present, skip"
+}
+
 if (-not (Test-Cmd "clamscan")) {
     winget install --id ClamAV.ClamAV -e --source winget --accept-package-agreements --accept-source-agreements
     Write-Warning "After install, add ClamAV's bin folder to PATH and run freshclam."
@@ -57,5 +63,13 @@ if (-not $pipShow) {
 }
 
 Write-Host "Orion install complete."
+
+$uiDir = Join-Path $PSScriptRoot "ui"
+if ((Test-Path $uiDir) -and (Test-Cmd "npm")) {
+    Push-Location $uiDir
+    npm install
+    Pop-Location
+}
+
 Write-Host "Next: set up scheduling, e.g.:"
 Write-Host '  schtasks /create /tn "Orion" /tr "python core\orchestrator.py" /sc minute /mo 30 /rl highest'

@@ -28,6 +28,7 @@ install_pkg() {
 
 command -v git >/dev/null 2>&1 || install_pkg git
 command -v python3 >/dev/null 2>&1 || install_pkg python3
+command -v node >/dev/null 2>&1 || install_pkg nodejs
 command -v clamscan >/dev/null 2>&1 || install_pkg clamav
 command -v osqueryi >/dev/null 2>&1 || echo "osquery not found — install from https://osquery.io/downloads (not in default repos on most distros)"
 command -v adb >/dev/null 2>&1 || install_pkg android-tools-adb 2>/dev/null || install_pkg android-tools 2>/dev/null || echo "adb not found — install your distro's android-tools package manually"
@@ -35,6 +36,10 @@ command -v ideviceinstaller >/dev/null 2>&1 || install_pkg libimobiledevice-util
 command -v notify-send >/dev/null 2>&1 || install_pkg libnotify-bin 2>/dev/null || install_pkg libnotify 2>/dev/null || true
 
 python3 -m pip show plyer >/dev/null 2>&1 || python3 -m pip install --user plyer
+
+if [ -d "$(dirname "$0")/ui" ] && command -v npm >/dev/null 2>&1; then
+    (cd "$(dirname "$0")/ui" && npm install)
+fi
 
 chmod +x "$(dirname "$0")"/scripts/linux/*.sh 2>/dev/null || true
 

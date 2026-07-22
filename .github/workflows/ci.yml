@@ -22,6 +22,8 @@ jobs:
           find . -name "*.py" -not -path "./.git/*" -print0 | xargs -0 -n1 python -m py_compile
       - name: Run state_store.py self-test
         run: python core/state_store.py
+      - name: Run settings.py self-test
+        run: python core/settings.py
       - name: Run notify.py self-test (expected to report no backend on CI runner)
         run: python core/notify.py || true
 
@@ -75,3 +77,25 @@ jobs:
           cp orion-manifest.json /tmp/orion-manifest.committed.json
           python generate_manifest.py
           diff /tmp/orion-manifest.committed.json orion-manifest.json
+
+  ui-build:
+    name: Build Electron UI (React bundle + syntax check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ui/package-lock.json
+      - name: Install dependencies
+        working-directory: ui
+        run: npm ci
+      - name: Build React bundle
+        working-directory: ui
+        run: npm run build
+      - name: Syntax-check Electron main/preload
+        working-directory: ui
+        run: |
+          node --check electron/main.cjs
+          node --check electron/preload.cjs
