@@ -18,7 +18,7 @@ for dev in "${devices[@]}"; do
     [ -e "$dev" ] || continue
     out=$(fuser -v "$dev" 2>/dev/null || true)
     [ -n "$out" ] || continue
-    echo "$out" | tail -n +2 | while read -r user pid access cmd; do
+    echo "$out" | tail -n +2 | while read -r _user pid _access cmd; do
         [ -n "$pid" ] || continue
         [[ "$cmd" =~ $ALLOWLIST_REGEX ]] && continue
         esc_dev=$(printf '%s' "$dev" | sed 's/\\/\\\\/g; s/"/\\"/g')
