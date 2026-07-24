@@ -20,6 +20,7 @@ win:
     - target: nsis
       arch: [x64]
   icon: build/icon.png
+  artifactName: "Orion-Setup-${version}.${ext}"
 nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true
@@ -35,6 +36,8 @@ linux:
   icon: build/icon.png
   category: Utility
   syncDesktopName: true
+  artifactName: "Orion-${version}.${ext}"
 deb:
   synopsis: Local defensive security audit toolkit
   maintainer: noreply@users.noreply.github.com
+  artifactName: "orion_${version}_amd64.${ext}"

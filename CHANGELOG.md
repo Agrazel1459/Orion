@@ -10,6 +10,24 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## v1.2.1 — Release readiness fixes
+### Added
+- README "Download & Install": step-by-step run instructions per OS/format
+  (Windows exe, Linux AppImage, Linux deb), not just a link — matches the
+  actual installer filenames now produced by the build.
+- GitHub repo "About" description set (was empty).
+
+### Fixed
+- `ui/package.json` version bumped from placeholder `0.0.0` to `1.0.0` —
+  needed for a real tagged release to exist at all.
+- `ui/electron-builder.yml`: added explicit `artifactName` for all three
+  installer targets so output filenames are predictable
+  (`Orion-Setup-<version>.exe`, `Orion-<version>.AppImage`,
+  `orion_<version>_amd64.deb`) and match what the README tells the user to
+  look for — previously left to electron-builder's defaults, which don't
+  match. Verified by rebuilding both Linux targets and confirming the
+  output filenames exactly.
+
 ## v1.2 — Installer packaging + autostart
 ### Added
 - `ui/electron-builder.yml` — packaging config: NSIS installer for Windows

@@ -202,14 +202,32 @@ cron line shown in the installation section above to match.
 
 ## Download & Install
 
-Prebuilt installers are attached to [GitHub Releases](https://github.com/Agrazel1459/Orion/releases):
+Prebuilt installers are attached to [GitHub Releases](https://github.com/Agrazel1459/Orion/releases/latest).
+If that page shows no release yet, one hasn't been tagged — see "Building from
+source" below in the meantime, or check the
+[Actions tab](https://github.com/Agrazel1459/Orion/actions/workflows/build.yml)
+for an in-progress build.
 
-- **Windows:** download the `.exe` and run it — standard NSIS installer,
-  lets you pick the install directory, adds a Start Menu entry and desktop
-  shortcut.
-- **Linux:** download either the `.AppImage` (make it executable and run it
-  directly, no install step) or the `.deb` (`sudo dpkg -i orion_*.deb`,
-  adds a desktop entry through your normal package manager).
+**Windows:**
+1. Download `Orion-Setup-<version>.exe` from the release.
+2. Run it. Windows SmartScreen will likely warn "unrecognized publisher" —
+   this is expected for an unsigned open-source build (see note below);
+   click "More info" → "Run anyway".
+3. Follow the installer — you can choose the install directory. It adds a
+   Start Menu entry and a desktop shortcut.
+4. Launch Orion from the desktop shortcut. On first run it still needs
+   `install.ps1` to have set up Python/ClamAV/etc — see Installation above
+   if you haven't run that yet.
+
+**Linux — AppImage (no install step):**
+1. Download the `.AppImage` file from the release.
+2. `chmod +x Orion-<version>.AppImage`
+3. `./Orion-<version>.AppImage`
+
+**Linux — .deb (Debian/Ubuntu, adds a proper package + desktop entry):**
+1. Download the `.deb` file from the release.
+2. `sudo dpkg -i orion_<version>_amd64.deb`
+3. Launch "Orion" from your applications menu, or run `orion` from a terminal.
 
 None of these installers bundle Python, git, or Node — on first launch the
 app still relies on `install.sh`/`install.ps1` (see Installation above) to

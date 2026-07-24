@@ -9,7 +9,7 @@
   "homepage": "https://github.com/Agrazel1459/Orion",
   "desktopName": "orion.desktop",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
