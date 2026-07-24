@@ -10,6 +10,15 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## v1.2.2 — Release workflow permission fix
+### Fixed
+- `.github/workflows/build.yml`: the `release` job's default `GITHUB_TOKEN`
+  had no write access on this repo, so `softprops/action-gh-release`
+  failed to create the release (test suite, Linux build, and Windows NSIS
+  build all passed — only the final attach-to-release step failed). Added
+  `permissions: contents: write` on that job. Confirmed by re-tagging
+  `v1.0.0` on the fixed commit and re-running end to end.
+
 ## v1.2.1 — Release readiness fixes
 ### Added
 - README "Download & Install": step-by-step run instructions per OS/format
