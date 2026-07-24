@@ -1,9 +1,60 @@
 # Changelog
 
+All notable changes to this project are documented here, newest first.
+Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
+
+> **For future changes:** any change made to this repo — by a person or an
+> LLM working from one of the `orion-*-instructions.md` files — should end
+> by appending its own entry here under Added/Changed/Fixed/Removed,
+> describing only what was actually built or fixed, not what was planned.
+
 ## [Unreleased]
+
+## v1.2 — Installer packaging + autostart
+### Added
+- `ui/electron-builder.yml` — packaging config: NSIS installer for Windows
+  (desktop + Start Menu shortcuts, user-choosable install directory),
+  AppImage + `.deb` for Linux. Built and verified locally: both Linux
+  targets produce real, valid installers (AppImage confirmed as a working
+  ELF executable; `.deb` confirmed via `dpkg-deb -I`/`-c` to carry correct
+  maintainer/homepage/description metadata and install a proper
+  `.desktop` entry). The NSIS/Windows target could not be built or run in
+  this environment (no Windows/Wine available) — structurally valid against
+  electron-builder's schema, but unverified beyond that.
+- `ui/build/icon.svg` + rendered `icon.png` — simple orbit-mark icon in the
+  existing theme colors (`#010e1a` / `#29e000`), used for the app icon and
+  tray icon.
+- Autostart: background-scanning toggle (already existed in Settings) now
+  also registers/removes an OS-level autostart entry — Windows via
+  `app.setLoginItemSettings`, Linux via `~/.config/autostart/orion.desktop`.
+  Synced on every launch (covers fresh installs where the toggle defaults
+  on but nothing is registered yet) and on every Settings save (replaces,
+  never duplicates). Launching via autostart starts minimized to tray
+  (`--hidden` flag); closing the window hides to tray instead of quitting
+  once a tray icon exists.
+- `.github/workflows/build.yml` — runs the existing test suite on every
+  push, then builds Linux (AppImage + deb) and Windows (NSIS) installers;
+  on a `v*` tag, attaches them to a draft GitHub Release.
+- `package.json`: added `description`, `author.email`, `homepage`,
+  `desktopName` — electron-builder requires these to produce a valid
+  `.deb` (build failed without them; fixed and reverified with a real
+  build, not just config review).
+
 ### Fixed
-- ShellCheck warnings (SC2034) in `linux-audio-device-audit.sh` — unused
-  `user`/`access` fields in the `fuser` output loop renamed to `_user`/`_access`.
+- `ui/electron/main.cjs` resolved `core/`/`scripts/` paths and wrote
+  `orion_state.json`/`orion_settings.json` relative to the dev repo
+  checkout. In a packaged install this pointed at the app's installed
+  location (`Program Files` on Windows), which isn't writable without
+  admin rights. Fixed via a new `ORION_DATA_DIR` environment variable
+  (read by `state_store.py` and `settings.py`, both changed minimally to
+  check it first) that Electron sets to `app.getPath('userData')` only
+  when packaged; dev/CLI behavior is unchanged. Verified with a real
+  write-and-read test through the override before considering it fixed.
+- `ui/electron-builder.yml`: two invalid config fields caught only by
+  attempting a real build, not by config review — `synopsis`/`maintainer`
+  were nested under `linux:` instead of the `deb:`-specific block, and
+  `desktopName` isn't a valid `linux:` field in electron-builder 26.x
+  (belongs in `package.json`, paired with `linux.syncDesktopName: true`).
 
 ## v1.1 — Desktop UI
 ### Added
@@ -36,6 +87,11 @@
   `notifications_enabled` setting is off.
 - `core/config.py`: added `USER_INTERVAL_FILE_NAME` and
   `DEFAULT_USER_INTERVAL_MINUTES` for the UI's persisted interval.
+
+### Fixed
+- ShellCheck warning (SC2034) in `linux-audio-device-audit.sh` — unused
+  `user`/`access` fields in the `fuser` output loop renamed to
+  `_user`/`_access`.
 
 ## v1.0 — Install tutorial + CI
 ### Added
@@ -77,3 +133,7 @@
 - No remote/cloud reporting or telemetry — fully local.
 - No silent privilege escalation — install scripts request elevation once,
   visibly, via standard OS prompts.
+- No code-signing/notarization (requires paid certificates, out of scope
+  for an open-source portfolio project) — noted in README rather than
+  worked around.
+

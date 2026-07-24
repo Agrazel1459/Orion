@@ -200,6 +200,27 @@ task/timer with the new value on Windows automatically. On Linux, the app
 persists your choice but doesn't edit your crontab for you — update the
 cron line shown in the installation section above to match.
 
+## Download & Install
+
+Prebuilt installers are attached to [GitHub Releases](https://github.com/Agrazel1459/Orion/releases):
+
+- **Windows:** download the `.exe` and run it — standard NSIS installer,
+  lets you pick the install directory, adds a Start Menu entry and desktop
+  shortcut.
+- **Linux:** download either the `.AppImage` (make it executable and run it
+  directly, no install step) or the `.deb` (`sudo dpkg -i orion_*.deb`,
+  adds a desktop entry through your normal package manager).
+
+None of these installers bundle Python, git, or Node — on first launch the
+app still relies on `install.sh`/`install.ps1` (see Installation above) to
+set those up. Installers aren't code-signed (that requires a paid
+certificate, out of scope for an open-source project), so Windows
+SmartScreen and some Linux distros may warn about an unrecognized
+publisher on first run — that's expected for an unsigned open-source
+build.
+
+Building from source instead: see the "Desktop App" section above.
+
 ## Uninstalling
 
 1. Remove the scheduled task/timer:

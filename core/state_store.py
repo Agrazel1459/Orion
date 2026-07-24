@@ -3,7 +3,12 @@ import os
 import uuid
 from datetime import datetime, timezone
 
-STATE_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "orion_state.json")
+STATE_FILE = os.environ.get("ORION_DATA_DIR")
+STATE_FILE = (
+    os.path.join(STATE_FILE, "orion_state.json")
+    if STATE_FILE
+    else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "orion_state.json")
+)
 
 DEFAULT_FLAGS = {
     "false_positive_reviewed": False,

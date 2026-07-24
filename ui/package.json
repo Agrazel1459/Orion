@@ -1,5 +1,13 @@
 {
   "name": "ui",
+  "productName": "Orion",
+  "description": "Local defensive security audit toolkit",
+  "author": {
+    "name": "Orion contributors",
+    "email": "noreply@users.noreply.github.com"
+  },
+  "homepage": "https://github.com/Agrazel1459/Orion",
+  "desktopName": "orion.desktop",
   "private": true,
   "version": "0.0.0",
   "type": "module",

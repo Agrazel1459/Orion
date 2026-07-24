@@ -8,8 +8,11 @@ import os
 
 from config import USER_INTERVAL_FILE_NAME, DEFAULT_USER_INTERVAL_MINUTES
 
-SETTINGS_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), USER_INTERVAL_FILE_NAME
+_data_dir_override = os.environ.get("ORION_DATA_DIR")
+SETTINGS_FILE = (
+    os.path.join(_data_dir_override, USER_INTERVAL_FILE_NAME)
+    if _data_dir_override
+    else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), USER_INTERVAL_FILE_NAME)
 )
 
 DEFAULTS = {

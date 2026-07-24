@@ -1,0 +1,107 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  # Reuses the exact same test loop as ci.yml rather than reimplementing it —
+  # calls the same commands each job already runs. If ci.yml's jobs change,
+  # update this job to match rather than letting the two drift apart.
+  test:
+    name: Run existing test suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile all Python files
+        run: find . -name "*.py" -not -path "./.git/*" -print0 | xargs -0 -n1 python -m py_compile
+      - name: Run state_store.py self-test
+        run: python core/state_store.py
+      - name: Run settings.py self-test
+        run: python core/settings.py
+      - name: Manifest drift check
+        run: |
+          cp orion-manifest.json /tmp/orion-manifest.committed.json
+          python generate_manifest.py
+          diff /tmp/orion-manifest.committed.json orion-manifest.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ui/package-lock.json
+      - name: Install UI dependencies
+        working-directory: ui
+        run: npm ci
+      - name: Build React bundle
+        working-directory: ui
+        run: npm run build
+
+  build-linux:
+    name: Build Linux installers (AppImage + deb)
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ui/package-lock.json
+      - name: Install dependencies
+        working-directory: ui
+        run: npm ci
+      - name: Build AppImage + deb
+        working-directory: ui
+        run: npx electron-builder --linux AppImage deb --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: orion-linux
+          path: |
+            ui/release/*.AppImage
+            ui/release/*.deb
+
+  build-windows:
+    name: Build Windows installer (NSIS)
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ui/package-lock.json
+      - name: Install dependencies
+        working-directory: ui
+        run: npm ci
+      - name: Build NSIS installer
+        working-directory: ui
+        run: npx electron-builder --win nsis --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: orion-windows
+          path: ui/release/*.exe
+
+  release:
+    name: Attach installers to GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create release and attach installers
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/orion-linux/*.AppImage
+            artifacts/orion-linux/*.deb
+            artifacts/orion-windows/*.exe
+          draft: true
+          generate_release_notes: true
