@@ -1,4 +1,4 @@
-# Orion
+# Orion [its not good enough im re making this.]
 
 [![CI](https://github.com/Agrazel1459/Orion/actions/workflows/ci.yml/badge.svg)](https://github.com/Agrazel1459/Orion/actions/workflows/ci.yml)
 
