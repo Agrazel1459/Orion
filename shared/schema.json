@@ -1,0 +1,34 @@
+{
+  "ScanResult": {
+    "scanId": "string (uuid)",
+    "timestamp": "string (ISO8601)",
+    "platform": "ios | android",
+    "itemsScanned": "int",
+    "findings": [
+      {
+        "id": "string (uuid)",
+        "type": "hash_match | heuristic_apk | clone_wallet | phishing_domain | clipboard_hijack",
+        "severity": "low | medium | high",
+        "path": "string (nullable, file path or package name)",
+        "description": "string, plain-language, no fear-mongering",
+        "remediation": "string, action user can take"
+      }
+    ]
+  },
+  "Settings": {
+    "hourlyScanEnabled": "bool",
+    "networkProtectionEnabled": "bool",
+    "clipboardWatchEnabled": "bool",
+    "telemetryOptIn": "bool (default false)"
+  },
+  "SignatureBundle": {
+    "version": "int",
+    "publishedAt": "string (ISO8601)",
+    "maliciousHashes": ["string (sha256)"],
+    "maliciousDomains": ["string"],
+    "knownWalletPublishers": [
+      {"packageName": "string", "signingCertSha256": "string"}
+    ],
+    "signature": "string (base64, ed25519 sig over the rest of the bundle)"
+  }
+}
