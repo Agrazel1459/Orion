@@ -1,0 +1,245 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E481FFEB066496BBE896237 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5479E70ABAC4A8B9483744E /* App.swift */; };
+		7634E2C84AF1421BBA689258 /* DnsFilterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCB0628F5094FD388CC8393 /* DnsFilterProvider.swift */; };
+		8570CBE9AB344D3C8A1A6C3F /* ScanOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC896ED134450CB935975E /* ScanOperation.swift */; };
+		346C7B33E56C49F2A155563E /* ScanScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F646C8C0A4417B1CE11F9 /* ScanScheduler.swift */; };
+		51160272B679491080FEFCD5 /* SignatureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6A5B22EEBB432E9B9539DB /* SignatureStore.swift */; };
+		F2AF627883784B739834B569 /* OrionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAB5929D4C643A79CCF2E5A /* OrionScreen.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F5479E70ABAC4A8B9483744E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App.swift"; sourceTree = "<group>"; };
+		FBCB0628F5094FD388CC8393 /* DnsFilterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DnsFilterProvider.swift"; sourceTree = "<group>"; };
+		C1BC896ED134450CB935975E /* ScanOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanOperation.swift"; sourceTree = "<group>"; };
+		2D7F646C8C0A4417B1CE11F9 /* ScanScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanScheduler.swift"; sourceTree = "<group>"; };
+		8A6A5B22EEBB432E9B9539DB /* SignatureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignatureStore.swift"; sourceTree = "<group>"; };
+		9DAB5929D4C643A79CCF2E5A /* OrionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrionScreen.swift"; sourceTree = "<group>"; };
+		FC08AD7EEFBF4DA1B856FA80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9186FCAD90EB419BB1B4792C /* Orion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		50AD87CFFC33485AA76B0B09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A4686C432F843698C8BB5C1 = {
+			isa = PBXGroup;
+			children = (
+				BB76645DD32341C0A086271A /* Orion */,
+				660ED3733D434C7B83E7027E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BB76645DD32341C0A086271A /* Orion */ = {
+			isa = PBXGroup;
+			children = (
+				F5479E70ABAC4A8B9483744E /* App.swift */,
+				FBCB0628F5094FD388CC8393 /* DnsFilterProvider.swift */,
+				C1BC896ED134450CB935975E /* ScanOperation.swift */,
+				2D7F646C8C0A4417B1CE11F9 /* ScanScheduler.swift */,
+				8A6A5B22EEBB432E9B9539DB /* SignatureStore.swift */,
+				9DAB5929D4C643A79CCF2E5A /* OrionScreen.swift */,
+				FC08AD7EEFBF4DA1B856FA80 /* Info.plist */,
+			);
+			path = Orion;
+			sourceTree = "<group>";
+		};
+		660ED3733D434C7B83E7027E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9186FCAD90EB419BB1B4792C /* Orion.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7C3A693F56E47B08D6B8A01 /* Orion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73C3C21432374A149C094603 /* Build configuration list for PBXNativeTarget "Orion" */;
+			buildPhases = (
+				29B6AFB688D048A5B0D334BE /* Sources */,
+				50AD87CFFC33485AA76B0B09 /* Frameworks */,
+				B51A61A50A9D4B03A21A9027 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Orion;
+			productName = Orion;
+			productReference = 9186FCAD90EB419BB1B4792C /* Orion.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C27A0EBE354C4D7392ABE7D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = CF9300D64FBE4631A4C2558D /* Build configuration list for PBXProject "Orion" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4A4686C432F843698C8BB5C1;
+			productRefGroup = 660ED3733D434C7B83E7027E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7C3A693F56E47B08D6B8A01 /* Orion */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B51A61A50A9D4B03A21A9027 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29B6AFB688D048A5B0D334BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E481FFEB066496BBE896237 /* App.swift in Sources */,
+				7634E2C84AF1421BBA689258 /* DnsFilterProvider.swift in Sources */,
+				8570CBE9AB344D3C8A1A6C3F /* ScanOperation.swift in Sources */,
+				346C7B33E56C49F2A155563E /* ScanScheduler.swift in Sources */,
+				51160272B679491080FEFCD5 /* SignatureStore.swift in Sources */,
+				F2AF627883784B739834B569 /* OrionScreen.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0A76F7A7F3AB49F796C3E961 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Orion/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orion.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		41A74D37EC5F475492DF60EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Orion/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orion.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2B2EB73F5DC74A58ACA9CE15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		340B00725D7C4C2CAA5B8514 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73C3C21432374A149C094603 /* Build configuration list for PBXNativeTarget "Orion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A76F7A7F3AB49F796C3E961 /* Debug */,
+				41A74D37EC5F475492DF60EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF9300D64FBE4631A4C2558D /* Build configuration list for PBXProject "Orion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B2EB73F5DC74A58ACA9CE15 /* Debug */,
+				340B00725D7C4C2CAA5B8514 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C27A0EBE354C4D7392ABE7D3 /* Project object */;
+}

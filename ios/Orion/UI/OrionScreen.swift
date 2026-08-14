@@ -47,7 +47,7 @@ final class ScanState: ObservableObject {
     }
 }
 
-struct OrionApp: View {
+struct OrionRootView: View {
     @StateObject private var state = ScanState()
 
     var body: some View {
@@ -168,5 +168,5 @@ private struct SettingRow: View {
 }
 
 #Preview {
-    OrionApp()
+    OrionRootView()
 }

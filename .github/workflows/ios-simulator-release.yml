@@ -1,0 +1,30 @@
+name: iOS Simulator Build
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    runs-on: macos-14
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build for simulator (unsigned)
+        working-directory: ios
+        run: |
+          xcodebuild -project Orion.xcodeproj -scheme Orion \
+            -sdk iphonesimulator -configuration Release \
+            CODE_SIGNING_ALLOWED=NO \
+            -derivedDataPath build
+      - name: Zip .app
+        working-directory: ios
+        run: |
+          cd build/Build/Products/Release-iphonesimulator
+          zip -r -q Orion-Simulator.zip Orion.app
+          mv Orion-Simulator.zip $GITHUB_WORKSPACE/
+      - name: Attach to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Orion-Simulator.zip

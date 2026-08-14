@@ -16,14 +16,23 @@ git tag v1.0.0 && git push origin v1.0.0
 ```
 
 ### iOS
-Apple requires a signed build from a Developer account, so there's no
-downloadable IPA here. To run it:
+Real devices need a signed build from an Apple Developer account, which this
+repo can't produce. What you *can* download:
+→ [Releases](../../releases) — `Orion-Simulator.zip`, an unsigned build for
+the **iOS Simulator only** (Xcode required to run it, no real iPhone/iPad).
+Unzip, then drag `Orion.app` onto a running Simulator window, or:
 ```
-cd ios && open Orion.xcodeproj   # or the .xcworkspace if present
+xcrun simctl install booted Orion.app
+xcrun simctl launch booted com.orion.app
 ```
-Select your device/simulator in Xcode, set your team under Signing &
-Capabilities, and Run. TestFlight distribution needs an App Store Connect
-account (not something this repo can automate).
+
+Both this and the Android APK build from the same tag push:
+```
+git tag v1.0.0 && git push origin v1.0.0
+```
+
+To run on your own iPhone instead, open `ios/Orion.xcodeproj` in Xcode, set
+your team under Signing & Capabilities, and Run.
 
 ## Structure
 - `android/` — Kotlin/Jetpack Compose app
