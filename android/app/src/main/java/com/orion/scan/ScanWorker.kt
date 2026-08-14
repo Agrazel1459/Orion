@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.*
+import com.orion.data.SignatureStore
 import java.util.concurrent.TimeUnit
 
 class ScanWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {

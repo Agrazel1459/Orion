@@ -17,11 +17,11 @@
 
 /* Begin PBXFileReference section */
 		F5479E70ABAC4A8B9483744E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App.swift"; sourceTree = "<group>"; };
-		FBCB0628F5094FD388CC8393 /* DnsFilterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DnsFilterProvider.swift"; sourceTree = "<group>"; };
-		C1BC896ED134450CB935975E /* ScanOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanOperation.swift"; sourceTree = "<group>"; };
-		2D7F646C8C0A4417B1CE11F9 /* ScanScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanScheduler.swift"; sourceTree = "<group>"; };
-		8A6A5B22EEBB432E9B9539DB /* SignatureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignatureStore.swift"; sourceTree = "<group>"; };
-		9DAB5929D4C643A79CCF2E5A /* OrionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrionScreen.swift"; sourceTree = "<group>"; };
+		FBCB0628F5094FD388CC8393 /* DnsFilterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network/DnsFilterProvider.swift"; sourceTree = "<group>"; };
+		C1BC896ED134450CB935975E /* ScanOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scan/ScanOperation.swift"; sourceTree = "<group>"; };
+		2D7F646C8C0A4417B1CE11F9 /* ScanScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scan/ScanScheduler.swift"; sourceTree = "<group>"; };
+		8A6A5B22EEBB432E9B9539DB /* SignatureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scan/SignatureStore.swift"; sourceTree = "<group>"; };
+		9DAB5929D4C643A79CCF2E5A /* OrionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI/OrionScreen.swift"; sourceTree = "<group>"; };
 		FC08AD7EEFBF4DA1B856FA80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9186FCAD90EB419BB1B4792C /* Orion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */

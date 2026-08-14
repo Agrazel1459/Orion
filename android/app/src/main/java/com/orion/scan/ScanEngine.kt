@@ -108,8 +108,10 @@ class ScanEngine(
     } catch (e: Exception) { null }
 
     private fun signingCertSha256(pkg: android.content.pm.PackageInfo): String? = try {
-        val signers = pkg.signingInfo?.apkContentsSigners ?: return null
-        if (signers.isEmpty()) null else {
+        val signers = pkg.signingInfo?.apkContentsSigners
+        if (signers.isNullOrEmpty()) {
+            null
+        } else {
             val digest = MessageDigest.getInstance("SHA-256")
             digest.digest(signers[0].toByteArray()).joinToString("") { "%02x".format(it) }
         }
