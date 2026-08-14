@@ -11,7 +11,7 @@ extension Color {
     static let orionMed = Color(red: 0xE0/255, green: 0xB0/255, blue: 0x4A/255)
 }
 
-struct Finding: Identifiable {
+struct FindingItem: Identifiable {
     let id = UUID()
     let severity: String // "high" | "medium" | "low"
     let description: String
@@ -31,7 +31,7 @@ final class ScanState: ObservableObject {
     @Published var lastScan = Date()
     @Published var itemsScanned = 0
     @Published var scanning = false
-    @Published var findings: [Finding] = []
+    @Published var findings: [FindingItem] = []
     @Published var hourlyScan = true
     @Published var networkProtection = true
     @Published var clipboardWatch = true
@@ -124,7 +124,7 @@ private struct EmptyFindings: View {
 }
 
 private struct FindingRow: View {
-    let f: Finding
+    let f: FindingItem
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Circle().fill(f.color).frame(width: 10, height: 10).padding(.top, 4)

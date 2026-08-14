@@ -1,6 +1,20 @@
 import Foundation
 import CryptoKit
 
+/// Tracks files the user has explicitly granted access to via the Files/Photos
+/// picker (security-scoped bookmarks). No background/system-wide file access —
+/// not possible, and never attempted, in the App Store sandbox.
+final class UserPickedFileStore {
+    static let shared = UserPickedFileStore()
+    private var urls: [URL] = []
+
+    func currentURLs() -> [URL] { urls }
+
+    func add(_ url: URL) {
+        urls.append(url)
+    }
+}
+
 struct Finding: Codable {
     let id: String
     let type: String
